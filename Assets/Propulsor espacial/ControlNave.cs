@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
+using UnityEngine.UI;
 
 public class ControlNave : MonoBehaviour {
 
@@ -8,6 +9,7 @@ public class ControlNave : MonoBehaviour {
     public ParticleEmitter propulsorIzquierdo;
     public ParticleEmitter propulsorDerecho;
     public AudioSource sonidoPropulsor;
+    public Text textoCombustible;
     private bool reproducirPropulsor;
     private float gravedad = 1.62519f;
     private float fuerzaPropulsor = 3f;
@@ -26,6 +28,7 @@ public class ControlNave : MonoBehaviour {
         }
         else
             sonidoPropulsor.Pause();
+        textoCombustible.text = "Combustible:" + Mathf.Round(combustible) + "%";
     }
     void movimientoNave()
     {
