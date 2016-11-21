@@ -41,7 +41,7 @@ public class ControlNave : MonoBehaviour {
                 rotationVector.z -= Input.GetAxis("Horizontal") * 0.1f * Time.deltaTime;
                 propulsorIzquierdo.emit = true;
                 propulsorDerecho.emit = false;
-                combustible -= 10 * Time.deltaTime;
+                combustible -= 5 * Time.deltaTime;
                 reproducirPropulsor = true;
             }
             if (Input.GetAxis("Horizontal") < 0)
@@ -50,7 +50,7 @@ public class ControlNave : MonoBehaviour {
                 rotationVector.z -= Input.GetAxis("Horizontal") * 0.1f * Time.deltaTime;
                 propulsorIzquierdo.emit = false;
                 propulsorDerecho.emit = true;
-                combustible -= 10 * Time.deltaTime;
+                combustible -= 5 * Time.deltaTime;
                 reproducirPropulsor = true;
             }
             if (Input.GetAxis("Horizontal") == 0)
@@ -63,7 +63,7 @@ public class ControlNave : MonoBehaviour {
             {
                 GetComponent<Rigidbody>().AddForce(transform.up * fuerzaPropulsor);
                 propulsorCentro.emit = true;
-                combustible -= 20 * Time.deltaTime;
+                combustible -= 10 * Time.deltaTime;
                 reproducirPropulsor = true;
             }
             if (Input.GetAxis("Vertical") == 0)
