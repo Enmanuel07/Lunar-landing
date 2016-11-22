@@ -13,7 +13,7 @@ public class ControlNave : MonoBehaviour {
     private bool reproducirPropulsor;
     private float gravedad = 1.62519f;
     private float fuerzaPropulsor = 3f;
-    private float combustible = 100;
+    public float combustible = 100;
 
 	void Start () {
         reproducirPropulsor = false;
@@ -28,6 +28,8 @@ public class ControlNave : MonoBehaviour {
         }
         else
             sonidoPropulsor.Pause();
+        if (Mathf.Round(combustible) > 100)
+            combustible = 100;
         textoCombustible.text = "Combustible:" + Mathf.Round(combustible) + "%";
     }
     void movimientoNave()
@@ -89,4 +91,5 @@ public class ControlNave : MonoBehaviour {
         }
         sonidoPropulsor.Play();
     }
+
 }

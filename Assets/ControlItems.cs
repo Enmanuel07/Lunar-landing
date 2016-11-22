@@ -3,7 +3,8 @@ using System.Collections;
 
 public class ControlItems : MonoBehaviour {
 
-	// Use this for initialization
+    // Use this for initialization
+    public GameObject propulsorEspacial;
 	void Start () {
 	
 	}
@@ -14,8 +15,10 @@ public class ControlItems : MonoBehaviour {
 	}
     void OnTriggerEnter(Collider otro)
     {
-        if(otro.tag == "Player")
+        print("hola");
+        if(otro.tag == "Player" && gameObject.tag == "Combustible")
         {
+            propulsorEspacial.GetComponent<ControlNave>().combustible += 50;
             Destroy(gameObject);
         }
     }
