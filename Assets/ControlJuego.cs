@@ -1,15 +1,23 @@
 ﻿using UnityEngine;
 using System.Collections;
+using Assets.Utilities;
 
 public class ControlJuego : MonoBehaviour
 {
+    private LevelGenerator levelGenerator;
+    
     public Transform ubicacionNave;
+
+    public GameObject[] tiles;
 
     private float velocidadCam = 1.2f;
 
-    // Use this for initialization
-    void Start()
-    {
+    // Use this for initialization 
+    void Start() {
+
+        levelGenerator = new LevelGenerator(new Vector2(0, 0), tiles, "Nivel1");
+
+        levelGenerator.GenerateLevel();
     }
 
     // Update is called once per frame
