@@ -1,7 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections;
 using UnityEngine.UI;
-
 public class ControlNave : MonoBehaviour {
 
     // Use this for initialization
@@ -10,6 +9,7 @@ public class ControlNave : MonoBehaviour {
     public ParticleEmitter propulsorDerecho;
     public AudioSource sonidoPropulsor;
     public Text textoCombustible;
+    public GameObject explosion;
     private bool reproducirPropulsor;
     private float gravedad = 1.62519f;
     private float fuerzaPropulsor = 3f;
@@ -95,9 +95,20 @@ public class ControlNave : MonoBehaviour {
     {
         if (otro.gameObject.tag == "Plataforma")
         {
-            print("Plata");
+            if (otro.relativeVelocity.sqrMagnitude > 4)
+            {
+                DestruccionNave();
+            }
         }
         else
-            Destroy(gameObject);
+        {
+            DestruccionNave();
+        }
+    }
+    void DestruccionNave()
+    {
+        textoCombustible.text = "R para rintentar";
+        Instantiate(explosion, transform.position, transform.rotation);
+        Destroy(gameObject);
     }
 }
