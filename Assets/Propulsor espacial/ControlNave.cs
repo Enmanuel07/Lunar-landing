@@ -10,6 +10,7 @@ public class ControlNave : MonoBehaviour {
     public ParticleEmitter propulsorDerecho;
     public AudioSource sonidoPropulsor;
     public Text textoCombustible;
+    public GameObject explosion;
     private bool reproducirPropulsor;
     private float gravedad = 1.62519f;
     private float fuerzaPropulsor = 3f;
@@ -98,6 +99,9 @@ public class ControlNave : MonoBehaviour {
             print("Plata");
         }
         else
+        {
+            Instantiate(explosion, transform.position, transform.rotation);
             Destroy(gameObject);
+        }
     }
 }
