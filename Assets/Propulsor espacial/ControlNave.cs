@@ -10,6 +10,7 @@ public class ControlNave : MonoBehaviour {
     public AudioSource sonidoPropulsor;
     public Text textoCombustible;
     public GameObject explosion;
+    private ControlJuego controlJuego;
     private bool reproducirPropulsor;
     private float gravedad = 1.62519f;
     private float fuerzaPropulsor = 3f;
@@ -17,6 +18,7 @@ public class ControlNave : MonoBehaviour {
 
 	void Start () {
         reproducirPropulsor = false;
+        controlJuego = Camera.main.GetComponent<ControlJuego>();
 	}
 	
 	// Update is called once per frame
@@ -107,6 +109,7 @@ public class ControlNave : MonoBehaviour {
     }
     void DestruccionNave()
     {
+        //controlJuego.Save(combustible);
         textoCombustible.text = "R para rintentar";
         Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
