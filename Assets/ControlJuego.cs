@@ -1,6 +1,7 @@
 ﻿using UnityEngine;
 using System.Collections;
 using Assets.Utilities;
+using UnityEngine.SceneManagement;
 
 public class ControlJuego : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class ControlJuego : MonoBehaviour
     void Update()
     {
         MovimientoCamara();
+        if (Input.GetKeyDown(KeyCode.R))
+            SceneManager.LoadScene(0);
     }
     void MovimientoCamara()
     {
