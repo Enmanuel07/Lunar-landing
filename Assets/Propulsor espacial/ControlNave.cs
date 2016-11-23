@@ -43,7 +43,7 @@ public class ControlNave : MonoBehaviour {
                 rotationVector.z -= Input.GetAxis("Horizontal") * 0.1f * Time.deltaTime;
                 propulsorIzquierdo.emit = true;
                 propulsorDerecho.emit = false;
-                combustible -= 5 * Time.deltaTime;
+                combustible -= 2 * Time.deltaTime;
                 reproducirPropulsor = true;
             }
             if (Input.GetAxis("Horizontal") < 0)
@@ -52,7 +52,7 @@ public class ControlNave : MonoBehaviour {
                 rotationVector.z -= Input.GetAxis("Horizontal") * 0.1f * Time.deltaTime;
                 propulsorIzquierdo.emit = false;
                 propulsorDerecho.emit = true;
-                combustible -= 5 * Time.deltaTime;
+                combustible -= 2 * Time.deltaTime;
                 reproducirPropulsor = true;
             }
             if (Input.GetAxis("Horizontal") == 0)
@@ -65,7 +65,7 @@ public class ControlNave : MonoBehaviour {
             {
                 GetComponent<Rigidbody>().AddForce(transform.up * fuerzaPropulsor);
                 propulsorCentro.emit = true;
-                combustible -= 10 * Time.deltaTime;
+                combustible -= 5 * Time.deltaTime;
                 reproducirPropulsor = true;
             }
             if (Input.GetAxis("Vertical") == 0)
@@ -91,5 +91,13 @@ public class ControlNave : MonoBehaviour {
         }
         sonidoPropulsor.Play();
     }
-
+    void OnCollisionEnter(Collision otro)
+    {
+        if (otro.gameObject.tag == "Plataforma")
+        {
+            print("Plata");
+        }
+        else
+            Destroy(gameObject);
+    }
 }
