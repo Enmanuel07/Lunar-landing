@@ -12,13 +12,15 @@ public class ShieldController : MonoBehaviour {
     // Use this for initialization
     void Start () {
 
-        _speed = 5.0f;
+        _speed = 20.0f;
         _acceleration = 1.0f;
-        _radius = 1.0f;
+        _radius = 2f;
 
         uniformCircularMotionBehaviour = new UniformCircularMotionBehaviour(_speed, _acceleration, _radius);
 
-	}
+        transform.parent = GameObject.FindGameObjectWithTag("Player").transform;
+
+    }
 	
 	// Update is called once per frame
 	void Update () {

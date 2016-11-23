@@ -2,7 +2,7 @@
 {           BBBBBBBB                BBB}
 {            BBBBB        B            }
 {             BBB        BBB           }
-{              B                       }
+{    P         B                       }
 {                                      }
 {                                      }
 {                                      }

@@ -10,9 +10,11 @@ namespace Assets.Utilities {
         TextAsset _levelMapAsset;
         Vector2 _levelOrigin;
         GameObject[] _tiles;
+        private Transform _levelDataGroup;
 
-        public LevelGenerator(Vector2 levelOrigin, GameObject[] tiles, string levelData) {
+        public LevelGenerator(Vector2 levelOrigin, GameObject[] tiles, string levelData, Transform levelDataGroup) {
 
+            _levelDataGroup = levelDataGroup;
             _tiles = tiles;
             _levelOrigin = levelOrigin;
             _levelMapAsset = Resources.Load(levelData) as TextAsset;
@@ -38,7 +40,10 @@ namespace Assets.Utilities {
                     GameObject tileToInstantiate = FindTile(character.ToString());
 
                     if(tileToInstantiate != null) {
-                        UnityEngine.Object.Instantiate(tileToInstantiate, new Vector3(_levelOrigin.x + j, _levelOrigin.y - i), tileToInstantiate.transform.rotation);
+
+                        GameObject instantiatedTile;
+                        instantiatedTile = (GameObject)UnityEngine.Object.Instantiate(tileToInstantiate, new Vector3(_levelOrigin.x + j, _levelOrigin.y - i), tileToInstantiate.transform.rotation);
+                        instantiatedTile.transform.parent = _levelDataGroup;
                     }
 
                     j++;

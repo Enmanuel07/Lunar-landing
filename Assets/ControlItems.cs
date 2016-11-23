@@ -4,8 +4,10 @@ using System.Collections;
 public class ControlItems : MonoBehaviour {
 
     // Use this for initialization
-    public GameObject propulsorEspacial;
+    private GameObject propulsorEspacial;
 	void Start () {
+
+        propulsorEspacial = GameObject.FindGameObjectWithTag("Player");
 	
 	}
 	

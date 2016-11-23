@@ -29,8 +29,8 @@ namespace Assets.Utilities {
 
             _time += UnityEngine.Time.deltaTime;
 
-            Speed += Acceleration * (_time);
-            _angle = Speed * _time / Radius;
+            //Speed = Acceleration * (_time);
+            _angle = Speed * Acceleration * _time / Radius;
 
             return new Vector3(Radius * Mathf.Cos(_angle), Radius * Mathf.Sin(_angle));
 
