@@ -8,6 +8,9 @@ using UnityEngine.UI;
 public class ControlJuego : MonoBehaviour
 {
 
+    public float levelWidth;
+    public float levelHeight;
+
     private LevelGenerator levelGenerator;
 
     public Transform levelDataGroup;
@@ -15,6 +18,7 @@ public class ControlJuego : MonoBehaviour
     public Transform ubicacionNave;
 
     public GameObject[] tiles;
+    public GameObject[] backgrounds;
 
     private float velocidadCam = 1.2f;
 
@@ -26,7 +30,7 @@ public class ControlJuego : MonoBehaviour
     // Use this for initialization 
     void Start() {
 
-        levelGenerator = new LevelGenerator(new Vector2(0, 0), tiles, "Nivel1", levelDataGroup);
+        levelGenerator = new LevelGenerator(new Vector2(0, 10), tiles, "Nivel1", levelDataGroup, backgrounds);
 
         levelGenerator.GenerateLevel();
         puntaje = 0;

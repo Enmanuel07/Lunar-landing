@@ -11,17 +11,23 @@ namespace Assets.Utilities {
         Vector2 _levelOrigin;
         GameObject[] _tiles;
         private Transform _levelDataGroup;
+        private GameObject[] _backgrounds;
 
-        public LevelGenerator(Vector2 levelOrigin, GameObject[] tiles, string levelData, Transform levelDataGroup) {
+        public LevelGenerator(Vector2 levelOrigin, GameObject[] tiles, string levelData, Transform levelDataGroup, GameObject[] backgrounds) {
 
             _levelDataGroup = levelDataGroup;
             _tiles = tiles;
             _levelOrigin = levelOrigin;
             _levelMapAsset = Resources.Load(levelData) as TextAsset;
+            _backgrounds = backgrounds;
 
         }
 
         public void GenerateLevel() {
+
+            foreach (var bg in _backgrounds) {
+                UnityEngine.Object.Instantiate(bg, new Vector3(_levelOrigin.x + bg.GetComponent<Renderer>().bounds.size.x / 2 - 0.5f, _levelOrigin.y - bg.GetComponent<Renderer>().bounds.size.y / 2 + 0.5f, bg.transform.position.z), Quaternion.identity);
+            }
 
             int i = 0;
             int j = 0;
