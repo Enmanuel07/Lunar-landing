@@ -1,10 +1,9 @@
 ﻿using UnityEngine;
-using System.Collections;
 using Assets.Utilities;
 using UnityEngine.SceneManagement;
-using System;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
+using UnityEngine.UI;
 
 public class ControlJuego : MonoBehaviour
 {
@@ -19,18 +18,25 @@ public class ControlJuego : MonoBehaviour
 
     private float velocidadCam = 1.2f;
 
+    public Text textoPuntaje;
+
+    private int puntaje;
+    private int puntajeAnterior;
+
     // Use this for initialization 
     void Start() {
 
         levelGenerator = new LevelGenerator(new Vector2(0, 0), tiles, "Nivel1", levelDataGroup);
 
         levelGenerator.GenerateLevel();
+        puntaje = 0;
     }
 
     // Update is called once per frame
     void Update()
     {
         MovimientoCamara();
+        textoPuntaje.text = "Puntaje: " + puntaje;
         if (Input.GetKeyDown(KeyCode.R))
             SceneManager.LoadScene(0);
 
@@ -48,9 +54,13 @@ public class ControlJuego : MonoBehaviour
     {
         if (ubicacionNave != null)
         {
+            puntajeAnterior = puntaje;
+            int nuevoPuntaje = Mathf.RoundToInt(Mathf.Abs(ubicacionNave.position.y)) * 2;
             Vector2 nuevaPosicion = Vector2.Lerp(transform.position, ubicacionNave.position, Time.deltaTime * velocidadCam);
             Vector3 posicionCamara = new Vector3(nuevaPosicion.x, nuevaPosicion.y, -10f);
             transform.position = new Vector3(posicionCamara.x, posicionCamara.y, -10f);
+            if (ubicacionNave.position.y < 0 && puntajeAnterior < nuevoPuntaje)
+                puntaje = nuevoPuntaje;
         }
     }
 

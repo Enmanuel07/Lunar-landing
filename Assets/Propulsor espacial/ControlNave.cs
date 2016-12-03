@@ -83,7 +83,7 @@ public class ControlNave : MonoBehaviour {
             propulsorDerecho.emit = false;
             propulsorIzquierdo.emit = false;
         }
-        GetComponent<Rigidbody>().AddForce(transform.up * -gravedad);
+        GetComponent<Rigidbody>().AddForce(transform.up * -gravedad, ForceMode.Acceleration);
     }
     private void ReproducirPropulsor()
     {
