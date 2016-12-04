@@ -20,8 +20,6 @@ public class ControlJuego : MonoBehaviour
     public GameObject[] tiles;
     public GameObject[] cityBackgrounds;
 
-    private float velocidadCam = 1.2f;
-
     public Text textoPuntaje;
 
     private int puntaje;
@@ -60,7 +58,7 @@ public class ControlJuego : MonoBehaviour
         {
             puntajeAnterior = puntaje;
             int nuevoPuntaje = Mathf.RoundToInt(Mathf.Abs(ubicacionNave.position.y)) * 2;
-            Vector2 nuevaPosicion = Vector2.Lerp(transform.position, ubicacionNave.position, Time.deltaTime * velocidadCam);
+            Vector2 nuevaPosicion = Vector2.Lerp(transform.position, ubicacionNave.position, Time.deltaTime * ConfiguracionGlobal.velocidadCamara);
             Vector3 posicionCamara = new Vector3(nuevaPosicion.x, nuevaPosicion.y, -10f);
             transform.position = new Vector3(posicionCamara.x, posicionCamara.y, -10f);
             if (ubicacionNave.position.y < 0 && puntajeAnterior < nuevoPuntaje)
