@@ -24,7 +24,7 @@ public class ControlNave : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
         movimientoNave();
-        if (reproducirPropulsor && ConfiguracionGlobal.efecto)
+        if (reproducirPropulsor && ConfiguracionGlobal.efectos)
         {
             ReproducirPropulsor();
         }
