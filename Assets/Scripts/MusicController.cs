@@ -20,6 +20,12 @@ public class MusicController : MonoBehaviour {
 
     void Update() {
 
+        if(!ConfiguracionGlobal.musica)
+        {
+            city.Stop();
+            victory.Stop();
+            almostThere.Stop();
+        }
         if(_platform == null) {
             _platform = GameObject.FindGameObjectWithTag("Plataforma").transform;
         } else {

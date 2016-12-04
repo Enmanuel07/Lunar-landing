@@ -8,7 +8,10 @@ public class ControlExplosion : MonoBehaviour
 
     void Start()
     {
-        sonidoExplosion.Play();
+        if (!ConfiguracionGlobal.efecto)
+            sonidoExplosion.Stop();
+        else
+            sonidoExplosion.Play();
         Destroy(gameObject, 2f);
     }
 }
