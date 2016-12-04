@@ -83,6 +83,7 @@ public class ControlJuego : MonoBehaviour
         playerData.fuel = nave.GetComponent<ControlNave>().combustible;
         playerData.xPosition = nave.GetComponent<ControlNave>().transform.position.x;
         playerData.yPosition = nave.GetComponent<ControlNave>().transform.position.y;
+        playerData.puntaje = puntaje;
 
         bf.Serialize(file, playerData);
 
@@ -102,6 +103,7 @@ public class ControlJuego : MonoBehaviour
             GameObject nave = GameObject.FindGameObjectWithTag("Player");
             nave.transform.position = new Vector3(playerData.xPosition, playerData.yPosition);
             nave.GetComponent<ControlNave>().combustible = playerData.fuel;
+            puntaje = playerData.puntaje;
         }
 
     }

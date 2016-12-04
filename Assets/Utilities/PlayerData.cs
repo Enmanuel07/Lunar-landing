@@ -13,6 +13,7 @@ namespace Assets.Utilities {
         public float fuel;
         public float xPosition;
         public float yPosition;
+        public int puntaje;
 
     }
 }
