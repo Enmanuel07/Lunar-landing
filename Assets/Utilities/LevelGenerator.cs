@@ -26,7 +26,8 @@ namespace Assets.Utilities {
         public void GenerateLevel() {
 
             foreach (var bg in _backgrounds) {
-                UnityEngine.Object.Instantiate(bg, new Vector3(_levelOrigin.x + bg.GetComponent<Renderer>().bounds.size.x / 2 - 0.5f, _levelOrigin.y - bg.GetComponent<Renderer>().bounds.size.y / 2 + 0.5f, bg.transform.position.z), Quaternion.identity);
+                GameObject instantiatedBg =  (GameObject)UnityEngine.Object.Instantiate(bg, new Vector3(_levelOrigin.x + bg.GetComponent<Renderer>().bounds.size.x / 2 - 0.5f, _levelOrigin.y - bg.GetComponent<Renderer>().bounds.size.y / 2 + 0.5f, bg.transform.position.z), Quaternion.identity);
+                instantiatedBg.transform.parent = _levelDataGroup;
             }
 
             int i = 0;
