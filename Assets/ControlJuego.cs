@@ -18,7 +18,7 @@ public class ControlJuego : MonoBehaviour
     public Transform ubicacionNave;
 
     public GameObject[] tiles;
-    public GameObject[] backgrounds;
+    public GameObject[] cityBackgrounds;
 
     private float velocidadCam = 1.2f;
 
@@ -30,7 +30,7 @@ public class ControlJuego : MonoBehaviour
     // Use this for initialization 
     void Start() {
 
-        levelGenerator = new LevelGenerator(new Vector2(0, 10), tiles, "Nivel1", levelDataGroup, backgrounds);
+        levelGenerator = new LevelGenerator(new Vector2(0, 10), tiles, "CityLevel", levelDataGroup, cityBackgrounds);
 
         levelGenerator.GenerateLevel();
         puntaje = 0;

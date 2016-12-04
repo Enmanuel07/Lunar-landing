@@ -17,7 +17,7 @@ public class ControlItems : MonoBehaviour {
 	}
     void OnTriggerEnter(Collider otro)
     {
-        print("hola");
+
         if(otro.tag == "Player" && gameObject.tag == "Combustible")
         {
             propulsorEspacial.GetComponent<ControlNave>().combustible += 50;
