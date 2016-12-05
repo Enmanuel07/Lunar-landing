@@ -10,10 +10,10 @@ namespace Assets.Utilities {
         TextAsset _levelMapAsset;
         Vector2 _levelOrigin;
         GameObject[] _tiles;
-        private Transform _levelDataGroup;
+        private GameObject _levelDataGroup;
         private GameObject[] _backgrounds;
 
-        public LevelGenerator(Vector2 levelOrigin, GameObject[] tiles, string levelData, Transform levelDataGroup, GameObject[] backgrounds) {
+        public LevelGenerator(Vector2 levelOrigin, GameObject[] tiles, string levelData, GameObject levelDataGroup, GameObject[] backgrounds) {
 
             _levelDataGroup = levelDataGroup;
             _tiles = tiles;
@@ -27,7 +27,7 @@ namespace Assets.Utilities {
 
             foreach (var bg in _backgrounds) {
                 GameObject instantiatedBg =  (GameObject)UnityEngine.Object.Instantiate(bg, new Vector3(_levelOrigin.x + bg.GetComponent<Renderer>().bounds.size.x / 2 - 0.5f, _levelOrigin.y - bg.GetComponent<Renderer>().bounds.size.y / 2 + 0.5f, bg.transform.position.z), Quaternion.identity);
-                instantiatedBg.transform.parent = _levelDataGroup;
+                instantiatedBg.transform.parent = _levelDataGroup.transform;
             }
 
             int i = 0;
@@ -50,7 +50,7 @@ namespace Assets.Utilities {
 
                         GameObject instantiatedTile;
                         instantiatedTile = (GameObject)UnityEngine.Object.Instantiate(tileToInstantiate, new Vector3(_levelOrigin.x + j, _levelOrigin.y - i), tileToInstantiate.transform.rotation);
-                        instantiatedTile.transform.parent = _levelDataGroup;
+                        instantiatedTile.transform.parent = _levelDataGroup.transform;
                     }
 
                     j++;
