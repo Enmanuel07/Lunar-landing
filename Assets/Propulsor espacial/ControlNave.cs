@@ -109,9 +109,9 @@ public class ControlNave : MonoBehaviour {
     }
     void DestruccionNave()
     {
+        Instantiate(explosion, transform.position, transform.rotation);
         //controlJuego.Save(combustible);
         textoCombustible.text = "R para rintentar";
-        Instantiate(explosion, transform.position, transform.rotation);
         Destroy(gameObject);
     }
 }

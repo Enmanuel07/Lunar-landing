@@ -72,7 +72,7 @@ public class ControlJuego : MonoBehaviour
 
         BinaryFormatter bf = new BinaryFormatter();
 
-        FileStream file = File.Open(Application.persistentDataPath + "/PlayerData.dat", FileMode.OpenOrCreate);
+        FileStream file = File.Open(ConfiguracionGlobal.ruta + "/PlayerData.dat", FileMode.OpenOrCreate);
 
         PlayerData playerData = new PlayerData();
 
@@ -91,10 +91,10 @@ public class ControlJuego : MonoBehaviour
 
     public void Load() {
 
-        if (File.Exists(Application.persistentDataPath + "/PlayerData.dat")) {
+        if (File.Exists(ConfiguracionGlobal.ruta + "/PlayerData.dat")) {
 
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/PlayerData.dat", FileMode.Open);
+            FileStream file = File.Open(ConfiguracionGlobal.ruta + "/PlayerData.dat", FileMode.Open);
             PlayerData playerData = (PlayerData)bf.Deserialize(file);
             file.Close();
 

@@ -12,5 +12,6 @@ namespace Assets.Utilities
         public bool efectos;
         public int dificultad;
         public float velCamara;
+        public string ruta;
     }
 }

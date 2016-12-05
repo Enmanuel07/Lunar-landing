@@ -4,8 +4,12 @@ using UnityEngine.UI;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using Assets.Utilities;
+#if UNITY_EDITOR
+using UnityEditor;
+#endif
 
-public class ConfiguracionGlobal : MonoBehaviour {
+public class ConfiguracionGlobal : MonoBehaviour
+{
 
     // Use this for initialization
     [HideInInspector]
@@ -16,10 +20,16 @@ public class ConfiguracionGlobal : MonoBehaviour {
         Moderado,
         Dificil
     }
-    [HideInInspector]static public bool musica;
-    [HideInInspector]static public bool efectos;
-    [HideInInspector]static public float velocidadCamara;
+    [HideInInspector]
+    static public bool musica;
+    [HideInInspector]
+    static public bool efectos;
+    [HideInInspector]
+    static public float velocidadCamara;
+    [HideInInspector]
     static public Edificultad dificultad;
+    [HideInInspector]
+    static public string ruta;
     public bool musicaToggle;
     public bool efectosToggle;
     public bool dropDificultad;
@@ -34,11 +44,12 @@ public class ConfiguracionGlobal : MonoBehaviour {
         if (dropDificultad)
             GetComponent<Dropdown>().value = (int)dificultad;
         if (inputVelCamara)
-            GetComponent<InputField>().text = ""+velocidadCamara;
+            GetComponent<InputField>().text = "" + velocidadCamara;
     }
-    	
-	// Update is called once per frame
-	void Update() {
+
+    // Update is called once per frame
+    void Update()
+    {
         if (musicaToggle)
             musica = GetComponent<Toggle>().isOn;
         if (efectosToggle)
@@ -52,27 +63,28 @@ public class ConfiguracionGlobal : MonoBehaviour {
     {
         BinaryFormatter bf = new BinaryFormatter();
 
-        FileStream file = File.Open(Application.persistentDataPath + "/Configuraciones.dat", FileMode.OpenOrCreate);
-
+        FileStream file = File.Open(ruta + "/Configuraciones.dat", FileMode.OpenOrCreate);
         Configuraciones configuraciones = new Configuraciones();
 
         configuraciones.dificultad = (int)dificultad;
         configuraciones.efectos = efectos;
         configuraciones.musica = musica;
         configuraciones.velCamara = velocidadCamara;
+        configuraciones.ruta = ruta;
 
         bf.Serialize(file, configuraciones);
+        File.WriteAllText(Application.persistentDataPath + "/ultimaRuta.txt", ruta);
 
         file.Close();
     }
     private void Load()
     {
-
-        if (File.Exists(Application.persistentDataPath + "/Configuraciones.dat"))
+        string ultimaRuta = File.ReadAllText(Application.persistentDataPath + "/ultimaRuta.txt");
+        if (File.Exists(ultimaRuta + "/Configuraciones.dat"))
         {
 
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/Configuraciones.dat", FileMode.Open);
+            FileStream file = File.Open(ultimaRuta + "/Configuraciones.dat", FileMode.Open);
             Configuraciones configuraciones = (Configuraciones)bf.Deserialize(file);
             file.Close();
 
@@ -80,7 +92,19 @@ public class ConfiguracionGlobal : MonoBehaviour {
             efectos = configuraciones.efectos;
             musica = configuraciones.musica;
             velocidadCamara = configuraciones.velCamara;
+            ruta = configuraciones.ruta;
+            
         }
+        else
+            ruta = Application.persistentDataPath;
 
+    }
+
+    public void Ruta()
+    {
+        #if UNITY_EDITOR
+            var path = EditorUtility.OpenFolderPanel("Ruta para guardar configuraciones", "", "");
+            ruta = path;
+        #endif
     }
 }
