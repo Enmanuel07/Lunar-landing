@@ -26,8 +26,6 @@ public class ControlJuego : MonoBehaviour
     public GameObject[] cityBackgrounds;
     public GameObject[] volcanoBackgrounds;
 
-    private float velocidadCam = 1.2f;
-
     public Text textoPuntaje;
 
     private int puntaje;
@@ -73,7 +71,7 @@ public class ControlJuego : MonoBehaviour
         {
             puntajeAnterior = puntaje;
             int nuevoPuntaje = Mathf.RoundToInt(Mathf.Abs(ubicacionNave.position.y)) * 2;
-            Vector2 nuevaPosicion = Vector2.Lerp(transform.position, ubicacionNave.position, Time.deltaTime * velocidadCam);
+            Vector2 nuevaPosicion = Vector2.Lerp(transform.position, ubicacionNave.position, Time.deltaTime * ConfiguracionGlobal.velocidadCamara);
             Vector3 posicionCamara = new Vector3(nuevaPosicion.x, nuevaPosicion.y, -10f);
             transform.position = new Vector3(posicionCamara.x, posicionCamara.y, -10f);
             if (ubicacionNave.position.y < 0 && puntajeAnterior < nuevoPuntaje)
@@ -125,7 +123,7 @@ public class ControlJuego : MonoBehaviour
 
         BinaryFormatter bf = new BinaryFormatter();
 
-        FileStream file = File.Open(Application.persistentDataPath + "/PlayerData.dat", FileMode.OpenOrCreate);
+        FileStream file = File.Open(ConfiguracionGlobal.ruta + "/PlayerData.dat", FileMode.OpenOrCreate);
 
         PlayerData playerData = new PlayerData();
 
@@ -134,6 +132,7 @@ public class ControlJuego : MonoBehaviour
         playerData.fuel = nave.GetComponent<ControlNave>().combustible;
         playerData.xPosition = nave.GetComponent<ControlNave>().transform.position.x;
         playerData.yPosition = nave.GetComponent<ControlNave>().transform.position.y;
+        playerData.puntaje = puntaje;
 
         bf.Serialize(file, playerData);
 
@@ -143,17 +142,28 @@ public class ControlJuego : MonoBehaviour
 
     public void Load() {
 
-        if (File.Exists(Application.persistentDataPath + "/PlayerData.dat")) {
+        if (File.Exists(ConfiguracionGlobal.ruta + "/PlayerData.dat")) {
 
             BinaryFormatter bf = new BinaryFormatter();
-            FileStream file = File.Open(Application.persistentDataPath + "/PlayerData.dat", FileMode.Open);
+            FileStream file = File.Open(ConfiguracionGlobal.ruta + "/PlayerData.dat", FileMode.Open);
             PlayerData playerData = (PlayerData)bf.Deserialize(file);
             file.Close();
 
             GameObject nave = GameObject.FindGameObjectWithTag("Player");
             nave.transform.position = new Vector3(playerData.xPosition, playerData.yPosition);
             nave.GetComponent<ControlNave>().combustible = playerData.fuel;
+            puntaje = playerData.puntaje;
         }
 
+    }
+    public void GuardarEnServicio()
+    {
+        string direccion = "http://localhost:8080/ServicioAplicada/records";
+        WWWForm form = new WWWForm();
+        form.AddField("nombreJugador", ConfiguracionGlobal.nombreJugador);
+        form.AddField("puntos", puntaje);
+        form.AddField("nivel", 1);
+
+        WWW www = new WWW(direccion, form);
     }
 }

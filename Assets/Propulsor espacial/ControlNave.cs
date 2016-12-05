@@ -40,13 +40,12 @@ public class ControlNave : MonoBehaviour {
         if (!_landed) {
             movimientoNave();
         }
-        
 
         if (_platform == null) {
             _platform = GameObject.FindGameObjectWithTag("Plataforma").transform;
         }
 
-        if (reproducirPropulsor && ConfiguracionGlobal.efecto)
+        if (reproducirPropulsor && ConfiguracionGlobal.efectos)
         {
             ReproducirPropulsor();
         }
@@ -162,9 +161,10 @@ public class ControlNave : MonoBehaviour {
     //}
     void DestruccionNave()
     {
+        Instantiate(explosion, transform.position, transform.rotation);
         //controlJuego.Save(combustible);
         textoCombustible.text = "R para rintentar";
-        Instantiate(explosion, transform.position, transform.rotation);
+        controlJuego.GuardarEnServicio();
         Destroy(gameObject);
     }
 }

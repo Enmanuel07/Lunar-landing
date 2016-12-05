@@ -70,6 +70,7 @@ public class PanelManager : MonoBehaviour {
 		SetSelected(m_PreviouslySelected);
 		StartCoroutine(DisablePanelDeleyed(m_Open));
 		m_Open = null;
+        ConfiguracionGlobal.Save();
 	}
 
 	IEnumerator DisablePanelDeleyed(Animator anim)
