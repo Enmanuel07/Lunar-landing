@@ -21,8 +21,8 @@ public class ControlJuego : MonoBehaviour
     public GameObject[] cityBackgrounds;
 
     public Text textoPuntaje;
-
-    private int puntaje;
+    [HideInInspector]
+    static public int puntaje;
     private int puntajeAnterior;
 
     // Use this for initialization 
@@ -97,22 +97,12 @@ public class ControlJuego : MonoBehaviour
             FileStream file = File.Open(ConfiguracionGlobal.ruta + "/PlayerData.dat", FileMode.Open);
             PlayerData playerData = (PlayerData)bf.Deserialize(file);
             file.Close();
-
+            
             GameObject nave = GameObject.FindGameObjectWithTag("Player");
             nave.transform.position = new Vector3(playerData.xPosition, playerData.yPosition);
             nave.GetComponent<ControlNave>().combustible = playerData.fuel;
             puntaje = playerData.puntaje;
         }
 
-    }
-    public void GuardarEnServicio()
-    {
-        string direccion = "http://localhost:8080/ServicioAplicada/records";
-        WWWForm form = new WWWForm();
-        form.AddField("nombreJugador", ConfiguracionGlobal.nombreJugador);
-        form.AddField("puntos", puntaje);
-        form.AddField("nivel", 1);
-
-        WWW www = new WWW(direccion, form);
     }
 }

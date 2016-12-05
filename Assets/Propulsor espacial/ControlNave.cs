@@ -112,7 +112,7 @@ public class ControlNave : MonoBehaviour {
         Instantiate(explosion, transform.position, transform.rotation);
         //controlJuego.Save(combustible);
         textoCombustible.text = "R para rintentar";
-        controlJuego.GuardarEnServicio();
+        ControlServicio.GuardarEnServicio();
         Destroy(gameObject);
     }
 }
