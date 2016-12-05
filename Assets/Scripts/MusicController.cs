@@ -30,75 +30,61 @@ public class MusicController : MonoBehaviour {
             victory.Stop();
             almostThere.Stop();
         }
-        if (!_controlNave.Landed() && _controlNave.IsCloseToPlatform()) {
-                        
-            if (!almostThere.isPlaying) {
+        if (_controlNave != null) {
+            if (!_controlNave.Landed() && _controlNave.IsCloseToPlatform()) {
 
-                switch (_controlJuego.GetCurrentLevel()) {
-                    case Assets.Utilities.Level.None:
-                        break;
-                    case Assets.Utilities.Level.City:
-                        city.Stop();
-                        break;
-                    case Assets.Utilities.Level.Volcano:
-                        volcano.Stop();
-                        break;
-                    default:
-                        break;
+                if (!almostThere.isPlaying) {
+
+                    switch (_controlJuego.GetCurrentLevel()) {
+                        case Assets.Utilities.Level.None:
+                            break;
+                        case Assets.Utilities.Level.City:
+                            city.Stop();
+                            break;
+                        case Assets.Utilities.Level.Volcano:
+                            volcano.Stop();
+                            break;
+                        default:
+                            break;
+                    }
+
+                    almostThere.Play();
                 }
 
-                almostThere.Play();
-            }
+            } else if (_controlNave.Landed() && !victory.isPlaying) {
 
-        } else if (_controlNave.Landed() && !victory.isPlaying) {
-
-            almostThere.Stop();
-            victory.Play();
-
-        } else {
-
-            if(!_controlNave.Landed()) {
-
-                if (victory.isPlaying) {
-                    victory.Stop();
-                }
-
-                switch (_controlJuego.GetCurrentLevel()) {
-                    case Assets.Utilities.Level.None:
-                        break;
-                    case Assets.Utilities.Level.City:
-                        if (!city.isPlaying) {
-                            city.Play();
-                        }
-                        break;
-                    case Assets.Utilities.Level.Volcano:
-                        if (!volcano.isPlaying) {
-                            volcano.Play();
-                        }
-                        break;
-                    default:
-                        break;
-                }
                 almostThere.Stop();
+                victory.Play();
+
+            } else {
+
+                if (!_controlNave.Landed()) {
+
+                    if (victory.isPlaying) {
+                        victory.Stop();
+                    }
+
+                    switch (_controlJuego.GetCurrentLevel()) {
+                        case Assets.Utilities.Level.None:
+                            break;
+                        case Assets.Utilities.Level.City:
+                            if (!city.isPlaying) {
+                                city.Play();
+                            }
+                            break;
+                        case Assets.Utilities.Level.Volcano:
+                            if (!volcano.isPlaying) {
+                                volcano.Play();
+                            }
+                            break;
+                        default:
+                            break;
+                    }
+                    almostThere.Stop();
+                }
+
             }
-                
+
         }
-        
-    }
-	
-    //void OnCollisionEnter(Collision other) {
-              
-
-    //    if(other.gameObject.CompareTag("Plataforma")) {
-            
-    //        if (other.relativeVelocity.sqrMagnitude <= 4) {
-
-    //            _landed = true;
-
-    //            almostThere.Stop();
-    //            victory.Play();
-    //        }
-    //    }
-    //}
-	
+    }   	
 }
