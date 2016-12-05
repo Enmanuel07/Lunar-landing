@@ -105,4 +105,14 @@ public class ControlJuego : MonoBehaviour
         }
 
     }
+    public void GuardarEnServicio()
+    {
+        string direccion = "http://localhost:8080/ServicioAplicada/records";
+        WWWForm form = new WWWForm();
+        form.AddField("nombreJugador", ConfiguracionGlobal.nombreJugador);
+        form.AddField("puntos", puntaje);
+        form.AddField("nivel", 1);
+
+        WWW www = new WWW(direccion, form);
+    }
 }

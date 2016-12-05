@@ -17,10 +17,10 @@ public class Parallax : MonoBehaviour {
 	// Update is called once per frame
 	void Update () {
 
-        float yOffset = Mathf.Repeat(_shipRb.velocity.y * scrollSpeed, 1);
-        float xOffset = Mathf.Repeat(_shipRb.velocity.x * scrollSpeed, 1);
+        //float yOffset = Mathf.Repeat(_shipRb.velocity.y * scrollSpeed, 1);
+        //float xOffset = Mathf.Repeat(_shipRb.velocity.x * scrollSpeed, 1);
 
-        GetComponent<Renderer>().sharedMaterial.mainTextureOffset = new Vector2(xOffset, yOffset);
+        //GetComponent<Renderer>().sharedMaterial.mainTextureOffset = new Vector2(xOffset, yOffset);
 	
 	}
 }

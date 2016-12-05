@@ -30,10 +30,13 @@ public class ConfiguracionGlobal : MonoBehaviour
     static public Edificultad dificultad;
     [HideInInspector]
     static public string ruta;
+    [HideInInspector]
+    static public string nombreJugador;
     public bool musicaToggle;
     public bool efectosToggle;
     public bool dropDificultad;
     public bool inputVelCamara;
+    public bool inputNombre;
     void Start()
     {
         Load();
@@ -45,6 +48,8 @@ public class ConfiguracionGlobal : MonoBehaviour
             GetComponent<Dropdown>().value = (int)dificultad;
         if (inputVelCamara)
             GetComponent<InputField>().text = "" + velocidadCamara;
+        if (inputNombre)
+            GetComponent<InputField>().text = nombreJugador;
     }
 
     // Update is called once per frame
@@ -58,6 +63,8 @@ public class ConfiguracionGlobal : MonoBehaviour
             dificultad = (Edificultad)GetComponent<Dropdown>().value;
         if (inputVelCamara)
             velocidadCamara = float.Parse(GetComponent<InputField>().text);
+        if (inputNombre)
+            nombreJugador = GetComponent<InputField>().text;
     }
     public static void Save()
     {
@@ -71,6 +78,7 @@ public class ConfiguracionGlobal : MonoBehaviour
         configuraciones.musica = musica;
         configuraciones.velCamara = velocidadCamara;
         configuraciones.ruta = ruta;
+        configuraciones.nombreJugador = nombreJugador;
 
         bf.Serialize(file, configuraciones);
         File.WriteAllText(Application.persistentDataPath + "/ultimaRuta.txt", ruta);
@@ -93,7 +101,7 @@ public class ConfiguracionGlobal : MonoBehaviour
             musica = configuraciones.musica;
             velocidadCamara = configuraciones.velCamara;
             ruta = configuraciones.ruta;
-            
+            nombreJugador = configuraciones.nombreJugador;
         }
         else
             ruta = Application.persistentDataPath;

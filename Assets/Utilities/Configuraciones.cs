@@ -13,5 +13,6 @@ namespace Assets.Utilities
         public int dificultad;
         public float velCamara;
         public string ruta;
+        public string nombreJugador;
     }
 }
