@@ -15,15 +15,36 @@ public class ControlNave : MonoBehaviour {
     private float gravedad = 1.62519f;
     private float fuerzaPropulsor = 3f;
     public float combustible = 100;
+    private bool _landed;
+    private bool _isCloseToPlatform;
+    private Transform _platform;
 
-	void Start () {
+    void Start () {
+
+        _landed = false;
         reproducirPropulsor = false;
         controlJuego = Camera.main.GetComponent<ControlJuego>();
 	}
+
+    public bool Landed() {
+        return _landed;
+    }
+
+    public void Landed(bool landed) {
+        _landed = landed;
+    }
 	
 	// Update is called once per frame
 	void Update () {
-        movimientoNave();
+
+        if (!_landed) {
+            movimientoNave();
+        }
+
+        if (_platform == null) {
+            _platform = GameObject.FindGameObjectWithTag("Plataforma").transform;
+        }
+
         if (reproducirPropulsor && ConfiguracionGlobal.efectos)
         {
             ReproducirPropulsor();
@@ -85,6 +106,10 @@ public class ControlNave : MonoBehaviour {
         }
         GetComponent<Rigidbody>().AddForce(transform.up * -gravedad, ForceMode.Acceleration);
     }
+
+    void LateUpdate() {
+        transform.position = new Vector3(Mathf.Clamp(transform.position.x, -0.5f, 39.5f), Mathf.Clamp(transform.position.y, -168f, 40f));
+    }
     private void ReproducirPropulsor()
     {
         if (sonidoPropulsor.isPlaying)
@@ -100,6 +125,14 @@ public class ControlNave : MonoBehaviour {
             if (otro.relativeVelocity.sqrMagnitude > 4)
             {
                 DestruccionNave();
+
+            } else {
+
+                if (!_landed) {
+                    _landed = true;
+                    StartCoroutine(controlJuego.GoToNextLevel());
+                    
+                }
             }
         }
         else
@@ -107,6 +140,25 @@ public class ControlNave : MonoBehaviour {
             DestruccionNave();
         }
     }
+
+    public bool IsCloseToPlatform() {
+
+        if (_platform == null) {
+            return false;
+        }
+        return Vector3.Distance(_platform.position, transform.position) < 10;
+
+    }
+
+    //void OnCollisionExit(Collision other) {
+
+    //    if (other.gameObject.CompareTag("Plataforma")) {
+
+    //        _landed = false;
+    //        Debug.Log("Saliendo de plataforma");
+    //    }
+        
+    //}
     void DestruccionNave()
     {
         Instantiate(explosion, transform.position, transform.rotation);

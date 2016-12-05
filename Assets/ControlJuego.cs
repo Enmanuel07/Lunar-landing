@@ -4,33 +4,44 @@ using UnityEngine.SceneManagement;
 using System.Runtime.Serialization.Formatters.Binary;
 using System.IO;
 using UnityEngine.UI;
+using System.Collections;
 
 public class ControlJuego : MonoBehaviour
 {
 
+    private GameObject _instantiatedLevelDataGroup;
     public float levelWidth;
     public float levelHeight;
 
-    private LevelGenerator levelGenerator;
+    private Level _currentLevel;
 
-    public Transform levelDataGroup;
+    private LevelGenerator _levelGenerator;
+
+    public GameObject ship;
+    public GameObject levelDataGroup;
     
     public Transform ubicacionNave;
 
     public GameObject[] tiles;
     public GameObject[] cityBackgrounds;
+    public GameObject[] volcanoBackgrounds;
 
     public Text textoPuntaje;
     [HideInInspector]
     static public int puntaje;
     private int puntajeAnterior;
 
+    public Level GetCurrentLevel() {
+        return _currentLevel;
+    }
+
     // Use this for initialization 
     void Start() {
 
-        levelGenerator = new LevelGenerator(new Vector2(0, 10), tiles, "CityLevel", levelDataGroup, cityBackgrounds);
+        _currentLevel = Level.None;
 
-        levelGenerator.GenerateLevel();
+        StartCoroutine(GoToNextLevel());
+
         puntaje = 0;
     }
 
@@ -51,6 +62,8 @@ public class ControlJuego : MonoBehaviour
         if(Input.GetButtonDown("Save")) {
             Save();
         }
+
+        
     }
     void MovimientoCamara()
     {
@@ -64,6 +77,44 @@ public class ControlJuego : MonoBehaviour
             if (ubicacionNave.position.y < 0 && puntajeAnterior < nuevoPuntaje)
                 puntaje = nuevoPuntaje;
         }
+    }
+
+    public IEnumerator GoToNextLevel() {
+
+
+        if (_currentLevel != Level.None) {
+            yield return new WaitForSecondsRealtime(5);
+        }
+
+        if (_instantiatedLevelDataGroup != null) {
+            Destroy(_instantiatedLevelDataGroup);
+        }
+        
+        _instantiatedLevelDataGroup = Instantiate(levelDataGroup);
+
+        switch (_currentLevel) {
+            case Level.None:
+                _currentLevel = Level.City;
+                _levelGenerator = new LevelGenerator(new Vector2(0, 10), tiles, "CityLevel", _instantiatedLevelDataGroup, cityBackgrounds);
+                _levelGenerator.GenerateLevel();
+                break;
+            case Level.City:
+                _currentLevel = Level.Volcano;
+                _levelGenerator = new LevelGenerator(new Vector2(0, 10), tiles, "VolcanoLevel", _instantiatedLevelDataGroup, volcanoBackgrounds);
+                _levelGenerator.GenerateLevel();
+                break;
+            case Level.Volcano:
+                _currentLevel = Level.City;
+                _levelGenerator = new LevelGenerator(new Vector2(0, 10), tiles, "CityLevel", _instantiatedLevelDataGroup, cityBackgrounds);
+                _levelGenerator.GenerateLevel();
+                break;
+            default:
+                break;
+        }
+
+        ship.GetComponent<ControlNave>().Landed(false);
+        ubicacionNave.position = new Vector3(20, 40, 0);
+        //ubicacionNave.position = Vector3.Lerp(ubicacionNave.position, new Vector3(20, 40, 0), 5f);
     }
 
     public void Save() {
